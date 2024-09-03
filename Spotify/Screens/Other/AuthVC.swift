@@ -8,37 +8,50 @@
 import UIKit
 import WebKit
 
-class AuthVC: UIViewController, WKUIDelegate {
-    
-    
-    private let webView: WKWebView = {
-        let webConfiguration = WKWebViewConfiguration()
-        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        return webView
-    }()
-    
-    override func loadView() {
-        view = webView
-        webView.uiDelegate = self
-    }
+class AuthVC: UIViewController, WKNavigationDelegate {
+
+    var webView: WKWebView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        webView = WKWebView()
+        webView.navigationDelegate = self
+        view.addSubview(webView)
+        webView.frame = view.bounds
+        
+        loadAuthURL()
+        
+    }
 
-        let myURL = URL(string:"https://www.apple.com")
-        let myRequest = URLRequest(url: myURL!)
-        webView.load(myRequest)
+    func loadAuthURL() {
+        if let url = URL(string: AuthManager.shared.signInURL) {
+            let request = URLRequest(url: url)
+            webView.load(request)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        guard let url = webView.url?.absoluteString else { return }
+        
+        guard let code = getQueryStringParameter(url: url, param: "code") else {
+            return
+        }
+        
+        print(code)
+        
+        webView.isHidden = true
+        
+        AuthManager.shared.refreshCodeForToken(code: code) { [weak self] success in
+            self?.handleCompletion(success)
+        }
     }
-    */
-
+    
+    func getQueryStringParameter(url: String, param: String) -> String? {
+        guard let urlComponents = URLComponents(string: url) else { return nil }
+        return urlComponents.queryItems?.first(where: { $0.name == param })?.value
+    }
+    
+    func handleCompletion(_ success: Bool) {
+        
+    }
 }

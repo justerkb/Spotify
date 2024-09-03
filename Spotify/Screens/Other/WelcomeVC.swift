@@ -13,6 +13,7 @@ class WelcomeVC: UIViewController {
         
         title = "Spotify"
         view.backgroundColor = .systemGreen
+        
         navigationController?.pushViewController(AuthVC(), animated: true)
     }
 
