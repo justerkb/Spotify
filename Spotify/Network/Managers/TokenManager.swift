@@ -100,7 +100,6 @@ class TokenManager {
     public func getValidAccesToken() -> String? {
         refreshTokenIfNeeded()
         
-        print(self.accessToken)
         return self.accessToken
     }
     

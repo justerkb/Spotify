@@ -20,7 +20,6 @@ class AuthVC: UIViewController, WKNavigationDelegate {
         webView.frame = view.bounds
         
         loadAuthURL()
-        
     }
 
     func loadAuthURL() {
@@ -42,7 +41,7 @@ class AuthVC: UIViewController, WKNavigationDelegate {
         webView.isHidden = true
         
         AuthManager.shared.refreshCodeForToken(code: code) { [weak self] success in
-            self?.handleCompletion(success)
+            self?.handleSignIn(succes: success)
         }
     }
     
@@ -54,4 +53,60 @@ class AuthVC: UIViewController, WKNavigationDelegate {
     func handleCompletion(_ success: Bool) {
         
     }
+    
+    func handleSignIn(succes: Bool) {
+        if succes {
+            DispatchQueue.main.async {
+                
+                let tabBar = TabBarController()
+                tabBar.modalPresentationStyle = .fullScreen
+                
+                
+                self.present(tabBar, animated: true)
+                    
+                NetworkManager.shared.getUserProfile { result in
+                    switch result {
+                    case.success(let userProfile):
+                        UserDefaults.standard.set(userProfile.displayName, forKey: "Name")
+                        
+                        guard let imageUrl = userProfile.images.first?.url else {
+                            print("user doesnt have image avatar")
+                            return
+                        }
+                        
+                        UserDefaults.standard.set(imageUrl, forKey: "AvatarUrl")
+                        
+                        NetworkManager.shared.loadImage(url: imageUrl) { dataImage in
+                           if let dataImage = dataImage {
+                               UserDefaults.standard.set(dataImage, forKey: "AvatarImage")
+                           }
+                        }
+                        
+                    case .failure(let error):
+                        print(error)
+                    }
+                        
+                }
+            
+                guard let imageUrl = UserDefaults.standard.string(forKey: "AvatarUrl") else {
+                    print("cant find avatar url")
+                    return
+                }
+                
+                
+                 NetworkManager.shared.loadImage(url: imageUrl) { dataImage in
+                    if let dataImage = dataImage {
+                        print("jkl")
+                        UserDefaults.standard.set(dataImage, forKey: "AvatarImage")
+                    }
+                }
+                
+                
+            }
+        } else {
+            print("something went wrong...")
+        }
+    }
 }
+
+

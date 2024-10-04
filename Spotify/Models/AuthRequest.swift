@@ -6,3 +6,10 @@
 //
 
 import Foundation
+struct AuthRequest: Codable {
+    let accessToken: String
+    let expiresIn: Int
+    let refreshToken: String?
+    let scope: String
+    let tokenType: String
+}

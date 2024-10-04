@@ -6,3 +6,6 @@
 //
 
 import Foundation
+struct GenresResponce: Codable {
+    let genres: [String]
+}

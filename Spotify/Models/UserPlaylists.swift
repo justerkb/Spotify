@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct UserPlaylist {
+struct PlaylistResponce: Codable {
     let href: String
     let total: Int
     let items: [Playlist]

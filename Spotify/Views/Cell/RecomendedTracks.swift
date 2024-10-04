@@ -1,7 +1,8 @@
 import Foundation
 import UIKit
 
-class RecomendedTracks: UICollectionViewCell, SelfConfiguringCell {
+class RecomendedTracks: UICollectionViewCell {
+     
     
     var name: UILabel = {
         let label = UILabel()
@@ -31,17 +32,17 @@ class RecomendedTracks: UICollectionViewCell, SelfConfiguringCell {
         stackView.spacing = 8 // Отступ между текстом и изображением
         
         contentView.addSubview(stackView)
-        
+        contentView.layer.cornerRadius = 15
         // Ограничения для stackView
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             // Ограничение ширины изображения
-            image.widthAnchor.constraint(equalToConstant: 50),
-            image.heightAnchor.constraint(equalToConstant: 50)
+            image.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            image.widthAnchor.constraint(equalTo: image.heightAnchor)
         ])
     }
 
@@ -49,11 +50,13 @@ class RecomendedTracks: UICollectionViewCell, SelfConfiguringCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(with playlsit: FeaturedPlaylistsCellViewModel) {
+    func configure(with playlsit: RecomendedTracksCellViewModel) {
         name.text = playlsit.name
         if let imageUrl = playlsit.image {
             NetworkManager.shared.loadImage(url: imageUrl) { data in
-                self.image.image = UIImage(data: data!)
+                DispatchQueue.main.sync {
+                    self.image.image = UIImage(data: data!)
+                }
             }
 
         }

@@ -6,3 +6,7 @@
 //
 
 import Foundation
+struct UserPlaylistsCellViewModel {
+    let name: String
+    let image: String?
+}

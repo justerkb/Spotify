@@ -6,3 +6,6 @@
 //
 
 import Foundation
+struct NewRelases: Codable {
+    let albums: Albums
+}

@@ -6,3 +6,7 @@
 //
 
 import Foundation
+struct FeaturedPlaylistResponce: Codable {
+    let message: String
+    let playlists: PlaylistsResponce
+}

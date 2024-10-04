@@ -16,7 +16,7 @@ class AuthManager {
     private let clientId     = "ad083730a3444de6871301650234b14d"
     private let clientSecret = "712375219eea466eb0a67929bf9f4408"
     private let redirectURI  = "https://www.iosacademy.io"
-    private let yourScopes   = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
+    private let yourScopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email%20user-top-read"
     private let tokenAPIURL  = "https://accounts.spotify.com/api/token"
 
         
@@ -34,6 +34,7 @@ class AuthManager {
     
     public var isSignedIn: Bool {
         return TokenManager.shared.hasValidToken
+//        return false
     }
     
     func refreshCodeForToken(code: String, completion: @escaping (Bool) -> Void) {
@@ -77,7 +78,6 @@ class AuthManager {
                 
                 let result = try decoder.decode(AuthRequest.self, from: data)
                 TokenManager.shared.cacheToken(authRequest: result)
-                print(result)
                 completion(true)
             } catch {
                 print(error.localizedDescription)

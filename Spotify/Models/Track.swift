@@ -6,3 +6,8 @@
 //
 
 import Foundation
+struct Track: Codable {
+    let album: Album
+    let href: String
+    let name: String
+}

@@ -6,3 +6,8 @@
 //
 
 import Foundation
+struct Image: Codable {
+    let url: String
+    let height: Int?
+    let width: Int?
+}

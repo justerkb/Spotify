@@ -6,3 +6,7 @@
 //
 
 import Foundation
+struct TopArtistsCellViewModel {
+    let name: String
+    let image: String?
+}
