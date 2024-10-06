@@ -15,25 +15,29 @@ class UserPlaylistsSectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let stackView = UIStackView(arrangedSubviews: [image, name])
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.alignment = .center
-        stackView.spacing = 10
-        stackView.axis = .horizontal
-        self.addSubview(stackView)
+       
+        contentView.addSubview(name)
+        contentView.addSubview(image)
+        name.textAlignment = .left
         self.backgroundColor = .systemGray6
-//        stackView.backgroundColor = .white
-        stackView.distribution = .fill
-    
+        name.font = .systemFont(ofSize: 16, weight: .bold)
+        image.translatesAutoresizingMaskIntoConstraints = false
+        name.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: contentView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            image.topAnchor.constraint(equalTo: contentView.topAnchor),
+            image.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        
 
-            image.heightAnchor.constraint(equalToConstant: 50),
-            image.widthAnchor.constraint(equalToConstant: 50)
+            image.widthAnchor.constraint(equalTo: image.heightAnchor),
+            
+            name.leadingAnchor.constraint(equalTo: image.trailingAnchor, constant: 5),
+            name.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            name.topAnchor.constraint(equalTo: contentView.topAnchor),
+            name.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            
+            
         ])
     }
     
@@ -42,7 +46,7 @@ class UserPlaylistsSectionCell: UICollectionViewCell {
     }
     
     func configure(with playlist: UserPlaylistsCellViewModel) {
-        name.text = "unkown"
+        name.text = playlist.name
         if let imageUrl = playlist.image {
             NetworkManager.shared.loadImage(url: imageUrl) { data in
                 DispatchQueue.main.sync {

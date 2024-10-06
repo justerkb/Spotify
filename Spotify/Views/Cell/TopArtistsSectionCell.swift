@@ -21,7 +21,7 @@ class TopArtistsSectionCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
         
-
+        image.layer.masksToBounds = true
         
         name.text = "unkown"
         name.textAlignment = .center
@@ -36,10 +36,9 @@ class TopArtistsSectionCell: UICollectionViewCell {
             name.leadingAnchor.constraint(equalTo: image.leadingAnchor),
             name.trailingAnchor.constraint(equalTo: image.trailingAnchor),
             name.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
-            
         ])
-
     }
+    
     
     
     required init?(coder: NSCoder) {
@@ -53,7 +52,6 @@ class TopArtistsSectionCell: UICollectionViewCell {
                     self.image.image = UIImage(data: data!)
                 }
             }
-
         }
     }
 }

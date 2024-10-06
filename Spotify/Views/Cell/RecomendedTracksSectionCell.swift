@@ -1,9 +1,8 @@
 import Foundation
 import UIKit
 
-class RecomendedTracks: UICollectionViewCell {
+class RecomendedTracksSectionCell: UICollectionViewCell {
      
-    
     var name: UILabel = {
         let label = UILabel()
         label.text = "unknown"
