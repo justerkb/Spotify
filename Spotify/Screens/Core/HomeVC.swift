@@ -8,7 +8,7 @@
 import UIKit
 enum BrowseSectionType {
     case userPlaylists(models: [UserPlaylistsCellViewModel])
-    case TopArtistsSectionCell(models: [TopArtistsCellViewModel])
+    case topArtists(models: [TopArtistsCellViewModel])
     case recomendedTracks(models: [RecomendedTracksCellViewModel])
 }
 
@@ -31,8 +31,6 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didDapLeftBar))
     
         fetchData()
-        
-        
     }
     
     @objc func didDapLeftBar() {
@@ -121,13 +119,11 @@ class HomeVC: UIViewController {
         sections.append(.userPlaylists(models: userPlaylists.compactMap({
             return UserPlaylistsCellViewModel(name: $0.name, image: $0.images?[0].url)
         })))
-        sections.append(.TopArtistsSectionCell(models:userTopArtists.compactMap({
+        sections.append(.topArtists(models:userTopArtists.compactMap({
             return TopArtistsCellViewModel(name: $0.name, image: $0.images[0].url)
         })))
         sections.append(.recomendedTracks(models:recomendedTracks.compactMap({
-            let model = RecomendedTracksCellViewModel(name: $0.name, image: $0.album.images[0].url)
-            print(model)
-            return model
+            return RecomendedTracksCellViewModel(name: $0.name, image: $0.album.images[0].url)
         })))
         
     }
@@ -148,7 +144,7 @@ class HomeVC: UIViewController {
         
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.identifier)
         collectionView.register(CustomReusableCell.self, forSupplementaryViewOfKind: HomeVC.categoryHeaderId, withReuseIdentifier: HomeVC.headerId)
-        collectionView.register(RecomendedTracks.self, forCellWithReuseIdentifier: RecomendedTracks.reuseIdentifier)
+        collectionView.register(RecomendedTracksSectionCell.self, forCellWithReuseIdentifier: RecomendedTracksSectionCell.reuseIdentifier)
         collectionView.register(UserPlaylistsSectionCell.self, forCellWithReuseIdentifier: UserPlaylistsSectionCell.reuseIdentifier)
         collectionView.register(TopArtistsSectionCell.self, forCellWithReuseIdentifier: TopArtistsSectionCell.reuseIdentifier)
         
@@ -175,19 +171,23 @@ class HomeVC: UIViewController {
     private func createUserPlaylistsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
+    
+        layoutItem.contentInsets.trailing = 10
+        layoutItem.contentInsets.bottom = 10
 
-        layoutItem.contentInsets.leading = 5
-        layoutItem.contentInsets.bottom = 5
-        layoutItem.contentInsets.trailing = 5
+
+        let layoutHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95), heightDimension: .fractionalHeight(0.25))
         
-        let layoutHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.25))
-        let layoutGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.65))
+        let layoutVerticalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.65))
         let horizontalLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutHorizontalGroupSize, subitems: [layoutItem])
-        let verticalLayoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutGroupSize, subitems: [horizontalLayoutGroup])
+        
+        let verticalLayoutGroup = NSCollectionLayoutGroup.vertical(layoutSize: layoutVerticalGroupSize, subitems: [horizontalLayoutGroup])
         let layoutSection = NSCollectionLayoutSection(group: verticalLayoutGroup)
         
-        layoutSection.orthogonalScrollingBehavior = .continuous
-        layoutSection.contentInsets.bottom = 15
+        layoutSection.orthogonalScrollingBehavior = .groupPaging
+        layoutSection.contentInsets.leading  = 15
+        layoutSection.contentInsets.trailing = 5
+        layoutSection.contentInsets.bottom   = 30
         
         return layoutSection
     }
@@ -203,7 +203,7 @@ class HomeVC: UIViewController {
         let layoutHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85), heightDimension: .fractionalWidth(0.5))
         let horizontalLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutHorizontalGroupSize, subitems: [layoutItem])
         let layoutSection = NSCollectionLayoutSection(group: horizontalLayoutGroup)
-        
+
         layoutSection.orthogonalScrollingBehavior = .continuous
         layoutSection.contentInsets.bottom = 15
         
@@ -241,7 +241,7 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         switch sectionType {
         case .userPlaylists(let models):
             return models.count
-        case .TopArtistsSectionCell(let models):
+        case .topArtists(let models):
             return models.count
         case .recomendedTracks(let models):
             return models.count
@@ -251,17 +251,17 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if !sections.isEmpty {
             let section = sections[indexPath.section]
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath)
+            
             
             switch section {
-            case .TopArtistsSectionCell(let models):
+            case .topArtists(let models):
                 let model = models[indexPath.item]
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopArtistsSectionCell.reuseIdentifier, for: indexPath) as? TopArtistsSectionCell
                 cell?.configure(with: model)
                 return cell!
             case .recomendedTracks(let models):
                 let model = models[indexPath.item]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecomendedTracks.reuseIdentifier, for: indexPath) as? RecomendedTracks
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecomendedTracksSectionCell.reuseIdentifier, for: indexPath) as? RecomendedTracksSectionCell
                 cell?.configure(with: model)
                 return cell!
             case .userPlaylists(let models):
@@ -270,12 +270,9 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 cell?.configure(with: model)
                 return cell!
             }
-            
-            
-            return cell
         } else {
             let emptyCell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.identifier, for: indexPath)
-                emptyCell.backgroundColor = .gray // Just a placeholder color
+                emptyCell.backgroundColor = .gray
             return emptyCell
         }
     }
