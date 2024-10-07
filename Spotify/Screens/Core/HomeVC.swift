@@ -147,6 +147,7 @@ class HomeVC: UIViewController {
         collectionView.register(RecomendedTracksSectionCell.self, forCellWithReuseIdentifier: RecomendedTracksSectionCell.reuseIdentifier)
         collectionView.register(UserPlaylistsSectionCell.self, forCellWithReuseIdentifier: UserPlaylistsSectionCell.reuseIdentifier)
         collectionView.register(TopArtistsSectionCell.self, forCellWithReuseIdentifier: TopArtistsSectionCell.reuseIdentifier)
+        collectionView.register(TopArtistsHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TopArtistsHeader.reuseIdentifier)
         
         collectionView.backgroundColor = .clear
         
@@ -207,6 +208,9 @@ class HomeVC: UIViewController {
         layoutSection.orthogonalScrollingBehavior = .continuous
         layoutSection.contentInsets.bottom = 15
         
+        let header = createSectionHeader()
+        layoutSection.boundarySupplementaryItems = [header]
+        
         return layoutSection
     }
     
@@ -230,6 +234,11 @@ class HomeVC: UIViewController {
         return layoutSection
     }
     
+    func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80))
+        let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
+        return layoutSectionHeader
+    }
 }
 
 //MARK: - CollectionView
@@ -279,6 +288,12 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return sections.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TopArtistsHeader.reuseIdentifier, for: indexPath) as! TopArtistsHeader
+        
+        return header
     }
     
 }

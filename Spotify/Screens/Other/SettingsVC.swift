@@ -64,7 +64,6 @@ class SettingsVC: UIViewController {
     private func createTableHeader() {
         let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: 90))
         
-        
         if let imageData = UserDefaults.standard.object(forKey: "AvatarImage") {
             headerView.configure(imageData: imageData as! Data)
         }
@@ -85,20 +84,14 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource  {
             
         }
         let title = options[indexPath.row].title
-        
         cell.configure(title: title)
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let option = options[indexPath.row]
-        
         self.navigationController?.pushViewController(option.vc, animated: true)
-        
     }
-    
     
 }
 

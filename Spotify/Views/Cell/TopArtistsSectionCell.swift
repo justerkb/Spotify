@@ -39,11 +39,10 @@ class TopArtistsSectionCell: UICollectionViewCell {
         ])
     }
     
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     func configure(with topArtist: TopArtistsCellViewModel) {
         name.text = topArtist.name
         if let imageUrl = topArtist.image {
