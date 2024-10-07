@@ -9,7 +9,6 @@ import UIKit
 enum BrowseSectionType {
     case userPlaylists(models: [UserPlaylistsCellViewModel])
     case topArtists(models: [TopArtistsCellViewModel])
-    case recomendedTracks(models: [RecomendedTracksCellViewModel])
 }
 
 class HomeVC: UIViewController {
@@ -43,37 +42,10 @@ class HomeVC: UIViewController {
         let group = DispatchGroup()
         group.enter()
         group.enter()
-        group.enter()
         
-        var recomendations: Recommendations?
         var userPlaylists: PlaylistsResponce?
         var userTopArtists: UserTopItems?
 
-        NetworkManager.shared.getGenres { genres in
-            switch genres {
-            case .success(let genresResponse):
-                let genres = genresResponse.genres
-                var seeds  = [String]()
-                while seeds.count < 2 {
-                    seeds.append(genres.randomElement()!)
-                }
-                print(seeds.joined(separator: ","))
-                NetworkManager.shared.getRecommendations(genres: seeds.joined(separator: ",")) { result in
-                    defer {
-                        group.leave()
-                    }
-                    switch result {
-                    case.success(let model):
-                        recomendations = model
-                    case.failure(let error):
-                        print(error)
-                    }
-                }
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
         
         NetworkManager.shared.getCurrentUserPlaylists { result in
             defer {
@@ -101,29 +73,24 @@ class HomeVC: UIViewController {
         }
         
         group.notify(queue: .main) { [self] in
-            guard let recomendedTracks  = recomendations?.tracks,
-                  let userTopArtists    = userTopArtists?.items,
+            guard let userTopArtists    = userTopArtists?.items,
                   let userPlaylists     = userPlaylists?.items
             else {
                 return
             }
             
-            self.configureModels(recomendedTracks: recomendedTracks, userTopArtists: userTopArtists, userPlaylists: userPlaylists)
+            self.configureModels(userTopArtists: userTopArtists, userPlaylists: userPlaylists)
             
             self.collectionView.reloadData()
-            print(recomendedTracks.count)
         }
     }
     
-    private func configureModels(recomendedTracks: [Track], userTopArtists: [Artist], userPlaylists: [Playlist]) {
+    private func configureModels(userTopArtists: [Artist], userPlaylists: [Playlist]) {
         sections.append(.userPlaylists(models: userPlaylists.compactMap({
             return UserPlaylistsCellViewModel(name: $0.name, image: $0.images?[0].url)
         })))
         sections.append(.topArtists(models:userTopArtists.compactMap({
             return TopArtistsCellViewModel(name: $0.name, image: $0.images[0].url)
-        })))
-        sections.append(.recomendedTracks(models:recomendedTracks.compactMap({
-            return RecomendedTracksCellViewModel(name: $0.name, image: $0.album.images[0].url)
         })))
         
     }
@@ -197,9 +164,7 @@ class HomeVC: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
 
-        layoutItem.contentInsets.leading = 5
-        layoutItem.contentInsets.bottom = 5
-        layoutItem.contentInsets.trailing = 5
+        layoutItem.contentInsets.trailing = 15
         
         let layoutHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.85), heightDimension: .fractionalWidth(0.5))
         let horizontalLayoutGroup = NSCollectionLayoutGroup.horizontal(layoutSize: layoutHorizontalGroupSize, subitems: [layoutItem])
@@ -207,7 +172,8 @@ class HomeVC: UIViewController {
 
         layoutSection.orthogonalScrollingBehavior = .continuous
         layoutSection.contentInsets.bottom = 15
-        
+        layoutSection.contentInsets.leading  = 15
+
         let header = createSectionHeader()
         layoutSection.boundarySupplementaryItems = [header]
         
@@ -235,7 +201,7 @@ class HomeVC: UIViewController {
     }
     
     func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(80))
+        let layoutSectionHeaderSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(60))
         let layoutSectionHeader = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: layoutSectionHeaderSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .top)
         return layoutSectionHeader
     }
@@ -252,8 +218,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             return models.count
         case .topArtists(let models):
             return models.count
-        case .recomendedTracks(let models):
-            return models.count
         }
     }
     
@@ -266,11 +230,6 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
             case .topArtists(let models):
                 let model = models[indexPath.item]
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopArtistsSectionCell.reuseIdentifier, for: indexPath) as? TopArtistsSectionCell
-                cell?.configure(with: model)
-                return cell!
-            case .recomendedTracks(let models):
-                let model = models[indexPath.item]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecomendedTracksSectionCell.reuseIdentifier, for: indexPath) as? RecomendedTracksSectionCell
                 cell?.configure(with: model)
                 return cell!
             case .userPlaylists(let models):

@@ -7,117 +7,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C00D6E1F-AB06-4716-B197-7329DF8EF553"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spotify/Screens/Core/HomeVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "fetchData()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "C00D6E1F-AB06-4716-B197-7329DF8EF553 - 1cbb3303ef3f8bb4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Spotify.Recommendations, Spotify.APIErrors&gt;) -&gt; () in closure #1 (Swift.Result&lt;Spotify.GenresResponce, Spotify.APIErrors&gt;) -&gt; () in Spotify.HomeVC.fetchData() -&gt; ()"
-                  moduleName = "Spotify"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yerko/Desktop/iosApps/Spotify/Spotify/Screens/Core/HomeVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "172">
-               </Location>
-               <Location
-                  uuid = "C00D6E1F-AB06-4716-B197-7329DF8EF553 - 1cbb3303ef3f8bb4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Spotify.Recommendations, Spotify.APIErrors&gt;) -&gt; () in closure #1 (Swift.Result&lt;Spotify.GenresResponce, Spotify.APIErrors&gt;) -&gt; () in Spotify.HomeVC.fetchData() -&gt; ()"
-                  moduleName = "Spotify"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yerko/Desktop/iosApps/Spotify/Spotify/Screens/Core/HomeVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "212">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "F72C9E4E-F04C-40E9-904A-5AF6625C4E52"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Spotify/Screens/Core/HomeVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
-            landmarkName = "fetchData()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F72C9E4E-F04C-40E9-904A-5AF6625C4E52 - 1cbb3303ef3f8bb4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Spotify.Recommendations, Spotify.APIErrors&gt;) -&gt; () in closure #1 (Swift.Result&lt;Spotify.GenresResponce, Spotify.APIErrors&gt;) -&gt; () in Spotify.HomeVC.fetchData() -&gt; ()"
-                  moduleName = "Spotify"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yerko/Desktop/iosApps/Spotify/Spotify/Screens/Core/HomeVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "172">
-               </Location>
-               <Location
-                  uuid = "F72C9E4E-F04C-40E9-904A-5AF6625C4E52 - 1cbb3303ef3f8bb4"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Spotify.Recommendations, Spotify.APIErrors&gt;) -&gt; () in closure #1 (Swift.Result&lt;Spotify.GenresResponce, Spotify.APIErrors&gt;) -&gt; () in Spotify.HomeVC.fetchData() -&gt; ()"
-                  moduleName = "Spotify"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yerko/Desktop/iosApps/Spotify/Spotify/Screens/Core/HomeVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "68"
-                  endingLineNumber = "68"
-                  offsetFromSymbolStart = "212">
-               </Location>
-               <Location
-                  uuid = "F72C9E4E-F04C-40E9-904A-5AF6625C4E52 - 1cbb3303ef3f8a57"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Result&lt;Spotify.Recommendations, Spotify.APIErrors&gt;) -&gt; () in closure #1 (Swift.Result&lt;Spotify.GenresResponce, Spotify.APIErrors&gt;) -&gt; () in Spotify.HomeVC.fetchData() -&gt; ()"
-                  moduleName = "Spotify"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/yerko/Desktop/iosApps/Spotify/Spotify/Screens/Core/HomeVC.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "67"
-                  endingLineNumber = "67"
-                  offsetFromSymbolStart = "224">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "7B1C771C-21A6-4FAF-A8D2-DE198D733E0C"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -125,8 +14,8 @@
             filePath = "Spotify/Screens/Core/HomeVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
+            startingLineNumber = "56"
+            endingLineNumber = "56"
             landmarkName = "fetchData()"
             landmarkType = "7">
             <Locations>
@@ -188,8 +77,8 @@
             filePath = "Spotify/Screens/Core/HomeVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "fetchData()"
             landmarkType = "7">
             <Locations>

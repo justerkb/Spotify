@@ -25,6 +25,7 @@ class TopArtistsSectionCell: UICollectionViewCell {
         
         name.text = "unkown"
         name.textAlignment = .center
+        name.font = .systemFont(ofSize: 16)
         NSLayoutConstraint.activate([
             image.topAnchor.constraint(equalTo: contentView.topAnchor),
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -37,6 +38,9 @@ class TopArtistsSectionCell: UICollectionViewCell {
             name.trailingAnchor.constraint(equalTo: image.trailingAnchor),
             name.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+        image.layer.masksToBounds = true
+        image.layer.cornerRadius = 85
+        image.contentMode = .scaleAspectFill
     }
     
     required init?(coder: NSCoder) {

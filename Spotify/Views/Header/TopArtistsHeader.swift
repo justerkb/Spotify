@@ -13,7 +13,7 @@ class TopArtistsHeader: UICollectionReusableView {
 
     let headerTitle: UILabel = {
         let label = UILabel()
-        label.font = .systemFont(ofSize: 26, weight: .semibold)
+        label.font = .systemFont(ofSize: 24, weight: .semibold)
         label.text = "Your favourite artists"
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
@@ -27,7 +27,7 @@ class TopArtistsHeader: UICollectionReusableView {
         self.addSubview(headerTitle)
         
         NSLayoutConstraint.activate([
-            headerTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            headerTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             headerTitle.topAnchor.constraint(equalTo: self.topAnchor),
             headerTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             headerTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor)

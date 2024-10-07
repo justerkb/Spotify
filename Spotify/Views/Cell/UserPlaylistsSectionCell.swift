@@ -19,10 +19,14 @@ class UserPlaylistsSectionCell: UICollectionViewCell {
         contentView.addSubview(name)
         contentView.addSubview(image)
         name.textAlignment = .left
-        self.backgroundColor = .systemGray6
+        self.backgroundColor = .systemGray5
         name.font = .systemFont(ofSize: 16, weight: .bold)
         image.translatesAutoresizingMaskIntoConstraints = false
         name.translatesAutoresizingMaskIntoConstraints = false
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.masksToBounds = true
+        layer.cornerRadius = 5.0
+        layer.masksToBounds = false
         
         NSLayoutConstraint.activate([
             image.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
