@@ -33,13 +33,12 @@ class TopArtistsSectionCell: UICollectionViewCell {
             
             image.heightAnchor.constraint(equalTo: image.widthAnchor),
             
-            name.topAnchor.constraint(equalTo: image.bottomAnchor),
+            name.topAnchor.constraint(equalTo: image.bottomAnchor, constant: 5),
             name.leadingAnchor.constraint(equalTo: image.leadingAnchor),
             name.trailingAnchor.constraint(equalTo: image.trailingAnchor),
-            name.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         image.layer.masksToBounds = true
-        image.layer.cornerRadius = 85
+        image.layer.cornerRadius = 76
         image.contentMode = .scaleAspectFill
     }
     

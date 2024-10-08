@@ -30,6 +30,15 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didDapLeftBar))
     
         fetchData()
+        
+        NetworkManager.shared.getRecents { result in
+            switch result {
+            case.success(let models):
+                print(models)
+            case.failure(let error):
+                print(error)
+            }
+        }
     }
     
     @objc func didDapLeftBar() {
@@ -140,8 +149,8 @@ class HomeVC: UIViewController {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let layoutItem = NSCollectionLayoutItem(layoutSize: itemSize)
     
-        layoutItem.contentInsets.trailing = 10
-        layoutItem.contentInsets.bottom = 10
+        layoutItem.contentInsets.trailing = 8
+        layoutItem.contentInsets.bottom = 8
 
 
         let layoutHorizontalGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95), heightDimension: .fractionalHeight(0.25))
@@ -154,7 +163,7 @@ class HomeVC: UIViewController {
         
         layoutSection.orthogonalScrollingBehavior = .groupPaging
         layoutSection.contentInsets.leading  = 15
-        layoutSection.contentInsets.trailing = 5
+        layoutSection.contentInsets.trailing = 7
         layoutSection.contentInsets.bottom   = 30
         
         return layoutSection

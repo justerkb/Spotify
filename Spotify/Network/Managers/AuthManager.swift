@@ -16,7 +16,8 @@ class AuthManager {
     private let clientId     = "ad083730a3444de6871301650234b14d"
     private let clientSecret = "712375219eea466eb0a67929bf9f4408"
     private let redirectURI  = "https://www.iosacademy.io"
-    private let yourScopes = "user-read-private%20playlist-modify-public%20playlist-read-private%20playlist-modify-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email%20user-top-read"
+    let yourScopes = "user-read-private playlist-modify-public playlist-read-private playlist-modify-private user-follow-read user-library-modify user-library-read user-read-email user-top-read user-read-recently-played"
+
     private let tokenAPIURL  = "https://accounts.spotify.com/api/token"
 
         

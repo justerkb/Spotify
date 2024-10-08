@@ -372,6 +372,50 @@ class NetworkManager {
         completion(request)
     }
     
+    public func getRecents(completion: @escaping(Result<PlayHistoryResponce, APIErrors>) -> Void) {
+        let endpoint = EndpointManager.shared.getEndPoint(for: .recentPlay)
+        guard let url = URL(string: endpoint) else {
+            completion(.failure(.invalidUrl))
+            return
+        }
+        
+        createRequest(
+            with: url,
+            type: .GET)
+        { request in
+            let task = URLSession.shared.dataTask(with: request) { data, responce, error in
+                if let error = error {
+                    completion(.failure(.clientSideError(errorMessage: error.localizedDescription)))
+                    return
+                }
+                
+                guard let data = data else {
+                    completion(.failure(.failedToGetData))
+                    return
+                }
+                
+                if let httpResponce = responce as? HTTPURLResponse {
+                    if httpResponce.statusCode != 200 {
+                        completion(.failure(.serverError(statusCode: httpResponce.statusCode)))
+                        return
+                    }
+                } else {
+                    completion(.failure(.invalidResponse))
+                    return
+                }
+
+                do {
+                    let result = try self.decoder.decode(PlayHistoryResponce.self , from: data)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(.decodingFailed))
+                    return
+                }
+            }
+            task.resume()
+        }
+        
+    }
     
     //MARK: - Enums
     enum HTTPMethod: String {

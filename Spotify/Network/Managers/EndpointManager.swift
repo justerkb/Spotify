@@ -23,6 +23,7 @@ class EndpointManager {
         case recommendations = "/recommendations"
         case genres = "/recommendations/available-genre-seeds"
         case topArtists = "/me/top/artists"
+        case recentPlay = "/me/player/recently-played"
         
     }
     
