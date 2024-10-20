@@ -56,6 +56,13 @@ class TopArtistsSectionCell: UICollectionViewCell {
             }
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        image.image = nil
+        name.text = nil
+    }
 }
 
 

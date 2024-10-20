@@ -71,7 +71,7 @@ class NetworkManager {
         }
         
         let task = URLSession.shared.dataTask(with: url) { data, responce, error in
-            if let error = error {
+            if let _ = error {
                 return
             }
             

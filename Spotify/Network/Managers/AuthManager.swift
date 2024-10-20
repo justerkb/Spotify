@@ -35,7 +35,6 @@ class AuthManager {
     
     public var isSignedIn: Bool {
         return TokenManager.shared.hasValidToken
-//        return false
     }
     
     func refreshCodeForToken(code: String, completion: @escaping (Bool) -> Void) {
@@ -67,7 +66,7 @@ class AuthManager {
         
         
         
-        let task = URLSession.shared.dataTask(with: request) { [weak self ] data, responce, error in
+        let task = URLSession.shared.dataTask(with: request) { data, responce, error in
             guard let data = data, error == nil else {
                 completion(false)
                 return
