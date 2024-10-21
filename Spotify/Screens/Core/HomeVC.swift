@@ -18,7 +18,10 @@ class HomeVC: UIViewController {
     private var collectionView: UICollectionView!
         
     private var sections = [BrowseSectionType]()
-                                
+    
+    var userPlaylists:  [Playlist] = []
+    var userTopArtists: [Artist]   = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,15 +33,6 @@ class HomeVC: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gear"), style: .done, target: self, action: #selector(didDapLeftBar))
     
         fetchData()
-        
-        NetworkManager.shared.getRecents { result in
-            switch result {
-            case.success(let models):
-                print(models)
-            case.failure(let error):
-                print(error)
-            }
-        }
     }
     
     @objc func didDapLeftBar() {
@@ -52,9 +46,8 @@ class HomeVC: UIViewController {
         group.enter()
         group.enter()
         
-        var userPlaylists: PlaylistsResponce?
         var userTopArtists: UserTopItems?
-
+        var userPlaylists: PlaylistsResponce?
         
         NetworkManager.shared.getCurrentUserPlaylists { result in
             defer {
@@ -80,7 +73,7 @@ class HomeVC: UIViewController {
             }
     
         }
-        
+     
         group.notify(queue: .main) { [self] in
             guard let userTopArtists    = userTopArtists?.items,
                   let userPlaylists     = userPlaylists?.items
@@ -95,6 +88,9 @@ class HomeVC: UIViewController {
     }
     
     private func configureModels(userTopArtists: [Artist], userPlaylists: [Playlist]) {
+        self.userPlaylists = userPlaylists
+        self.userTopArtists = userTopArtists
+        
         sections.append(.userPlaylists(models: userPlaylists.compactMap({
             return UserPlaylistsCellViewModel(name: $0.name, image: $0.images?[0].url)
         })))
@@ -263,6 +259,18 @@ extension HomeVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: TopArtistsHeader.reuseIdentifier, for: indexPath) as! TopArtistsHeader
         
         return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = sections[indexPath.section]
+        switch section {
+        case .userPlaylists:
+            let playlistVC = PlaylistVC(playlist: userPlaylists[indexPath.row])
+            self.navigationController?.pushViewController(playlistVC, animated: true)
+        case .topArtists:
+            break
+        }
+        
     }
     
 }

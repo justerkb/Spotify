@@ -335,8 +335,8 @@ class NetworkManager {
                     
                 if let httpResponce = responce as? HTTPURLResponse {
                     if httpResponce.statusCode != 200 {
-//                        completion(.failure(.serverError(statusCode: httpResponce.statusCode)))
-//                        return
+                        completion(.failure(.serverError(statusCode: httpResponce.statusCode)))
+                        return
                     }
                 } else {
                     completion(.failure(.invalidResponse))
@@ -344,8 +344,6 @@ class NetworkManager {
                 }
                 
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data)
-                    print(json)
                     let result = try self.decoder.decode(UserTopItems.self, from: data)
                     completion(.success(result))
                 } catch {
